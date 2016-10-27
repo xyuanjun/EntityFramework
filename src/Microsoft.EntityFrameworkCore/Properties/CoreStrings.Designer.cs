@@ -1457,11 +1457,19 @@ namespace Microsoft.EntityFrameworkCore.Internal
         }
 
         /// <summary>
-        /// Query on '{querySourceType}' uses paging operation (First/FirstOrDefault/Skip/Take) without OrderBy which may lead to unpredictable results.
+        /// Query: '{queryModel}' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
         /// </summary>
-        public static string PagingOperationWithoutOrderBy([CanBeNull] object querySourceType)
+        public static string RowLimitingOperationWithoutOrderBy([CanBeNull] object queryModel)
         {
-            return string.Format(CultureInfo.CurrentCulture, GetString("PagingOperationWithoutOrderBy", "querySourceType"), querySourceType);
+            return string.Format(CultureInfo.CurrentCulture, GetString("RowLimitingOperationWithoutOrderBy", "queryModel"), queryModel);
+        }
+
+        /// <summary>
+        /// Query: '{queryModel}' uses First/FirstOrDefault operation without OrderBy and filter which may lead to unpredictable results.
+        /// </summary>
+        public static string FirstWithoutOrderByAndFilter([CanBeNull] object queryModel)
+        {
+            return string.Format(CultureInfo.CurrentCulture, GetString("FirstWithoutOrderByAndFilter", "queryModel"), queryModel);
         }
 
         private static string GetString(string name, params string[] formatterNames)

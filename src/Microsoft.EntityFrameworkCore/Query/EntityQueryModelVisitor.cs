@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Query.ResultOperators.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
+using Microsoft.Extensions.Logging;
 using Remotion.Linq;
 using Remotion.Linq.Clauses;
 using Remotion.Linq.Clauses.Expressions;
@@ -352,12 +353,48 @@ namespace Microsoft.EntityFrameworkCore.Query
 
             queryModel.TransformExpressions(_subQueryMemberPushDownExpressionVisitor.Visit);
 
+            var underterministicResultChecker = new UndeterministicResultCheckingVisitor(QueryCompilationContext.Logger);
+            underterministicResultChecker.VisitQueryModel(queryModel);
+
             _navigationRewritingExpressionVisitorFactory.Create(this).Rewrite(queryModel, parentQueryModel: null);
 
             QueryCompilationContext.Logger
                 .LogDebug(
                     CoreEventId.OptimizedQueryModel,
                     () => CoreStrings.LogOptimizedQueryModel(Environment.NewLine, queryModel.Print()));
+        }
+
+        private class UndeterministicResultCheckingVisitor : RecursiveQueryModelVisitorBase
+        {
+            private const int QueryModelStringLengthLimit = 100;
+            private ILogger _logger;
+
+            public UndeterministicResultCheckingVisitor([NotNull] ILogger logger)
+            {
+                _logger = logger;
+            }
+
+            public override void VisitQueryModel(QueryModel queryModel)
+            {
+                if (queryModel.ResultOperators.Any(o => o is SkipResultOperator || o is TakeResultOperator)
+                    && !queryModel.BodyClauses.OfType<OrderByClause>().Any())
+                {
+                    _logger.LogWarning(
+                        CoreEventId.CompilingQueryModel,
+                        () => CoreStrings.RowLimitingOperationWithoutOrderBy(queryModel.Print(true, QueryModelStringLengthLimit)));
+                }
+
+                if (queryModel.ResultOperators.Any(o => o is FirstResultOperator)
+                    && !queryModel.BodyClauses.OfType<OrderByClause>().Any()
+                    && !queryModel.BodyClauses.OfType<WhereClause>().Any())
+                {
+                    _logger.LogWarning(
+                        CoreEventId.CompilingQueryModel,
+                        () => CoreStrings.FirstWithoutOrderByAndFilter(queryModel.Print(true, QueryModelStringLengthLimit)));
+                }
+
+                base.VisitQueryModel(queryModel);
+            }
         }
 
         /// <summary>
@@ -658,14 +695,6 @@ namespace Microsoft.EntityFrameworkCore.Query
         public override void VisitQueryModel([NotNull] QueryModel queryModel)
         {
             Check.NotNull(queryModel, nameof(queryModel));
-
-            if (queryModel.ResultOperators.Any(o => o is FirstResultOperator || o is SkipResultOperator || o is TakeResultOperator)
-                && !queryModel.BodyClauses.OfType<OrderByClause>().Any())
-            {
-                QueryCompilationContext.Logger.LogWarning(
-                    CoreEventId.CompilingQueryModel,
-                    () => CoreStrings.PagingOperationWithoutOrderBy(queryModel.MainFromClause.ItemType.Name));
-            }
 
             base.VisitQueryModel(queryModel);
 

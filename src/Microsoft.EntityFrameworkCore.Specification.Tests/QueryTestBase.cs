@@ -6371,34 +6371,6 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                  select new { c.CustomerID, o1.OrderID, o2.OrderDate }));
         }
 
-        [ConditionalFact]
-        public virtual void Paging_operation_without_orderby_issues_warning()
-        {
-            using (var context = CreateContext())
-            {
-                context.Customers.Skip(2).Take(3).ToList();
-            }
-        }
-
-        [ConditionalFact]
-        public virtual void Paging_operation_without_orderby_issues_warning_subquery()
-        {
-            using (var context = CreateContext())
-            {
-                context.Customers.Where(c => c.CustomerID == "ALFKI" && c.Orders.FirstOrDefault().OrderID > 1000).ToList();
-            }
-        }
-
-        [ConditionalFact]
-        public virtual void Single_SingleOrDefault_without_orderby_doesnt_issue_warning()
-        {
-            using (var context = CreateContext())
-            {
-                context.Customers.Where(c => c.CustomerID == "ALFKI").Single();
-                context.Customers.Where(c => c.CustomerID == "AROUT").SingleOrDefault();
-            }
-        }
-
         protected NorthwindContext CreateContext() => Fixture.CreateContext();
 
         protected QueryTestBase(TFixture fixture)
