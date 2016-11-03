@@ -2130,21 +2130,7 @@ namespace Microsoft.EntityFrameworkCore
         public static async Task<List<TSource>> ToListAsync<TSource>(
             [NotNull] this IQueryable<TSource> source,
             CancellationToken cancellationToken = default(CancellationToken))
-        {
-            Check.NotNull(source, nameof(source));
-
-            var list = new List<TSource>();
-
-            using (var asyncEnumerator = source.AsAsyncEnumerable().GetEnumerator())
-            {
-                while (await asyncEnumerator.MoveNext(cancellationToken))
-                {
-                    list.Add(asyncEnumerator.Current);
-                }
-            }
-
-            return list;
-        }
+            => await source.AsAsyncEnumerable().ToList(cancellationToken);
 
         /// <summary>
         ///     Asynchronously creates an array from an <see cref="IQueryable{T}" /> by enumerating it asynchronously.
@@ -2169,11 +2155,7 @@ namespace Microsoft.EntityFrameworkCore
         public static async Task<TSource[]> ToArrayAsync<TSource>(
             [NotNull] this IQueryable<TSource> source,
             CancellationToken cancellationToken = default(CancellationToken))
-        {
-            Check.NotNull(source, nameof(source));
-
-            return (await source.ToListAsync(cancellationToken)).ToArray();
-        }
+            => await source.AsAsyncEnumerable().ToArray(cancellationToken);
 
         #endregion
 
@@ -2532,18 +2514,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <returns> A task that represents the asynchronous operation. </returns>
         public static async Task LoadAsync<TSource>(
             [NotNull] this IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            Check.NotNull(source, nameof(source));
-
-            var asyncEnumerable = source.AsAsyncEnumerable();
-
-            using (var enumerator = asyncEnumerable.GetEnumerator())
-            {
-                while (await enumerator.MoveNext(cancellationToken))
-                {
-                }
-            }
-        }
+            => await source.AsAsyncEnumerable().ForEachAsync(_ => { }, cancellationToken);
 
         #endregion
 
@@ -2747,18 +2718,7 @@ namespace Microsoft.EntityFrameworkCore
             [NotNull] this IQueryable<T> source,
             [NotNull] Action<T> action,
             CancellationToken cancellationToken = default(CancellationToken))
-        {
-            Check.NotNull(source, nameof(source));
-            Check.NotNull(action, nameof(action));
-
-            using (var asyncEnumerator = source.AsAsyncEnumerable().GetEnumerator())
-            {
-                while (await asyncEnumerator.MoveNext(cancellationToken))
-                {
-                    action(asyncEnumerator.Current);
-                }
-            }
-        }
+            => await source.AsAsyncEnumerable().ForEachAsync(action, cancellationToken);
 
         #endregion
 
