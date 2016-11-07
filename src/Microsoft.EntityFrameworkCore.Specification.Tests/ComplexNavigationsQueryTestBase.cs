@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Query.Expressions.Internal;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestModels.ComplexNavigationsModel;
 using Microsoft.EntityFrameworkCore.Specification.Tests.TestUtilities.Xunit;
 using Xunit;
@@ -39,165 +40,99 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [ConditionalFact]
         public virtual void Entity_equality_empty()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne.Where(l => l.OneToOne_Optional_FK == new Level2());
-                var result = query.ToList();
-
-                Assert.Equal(0, result.Count);
-            }
+            AssertQuery<Level1>(l1s => l1s.Where(l => l.OneToOne_Optional_FK == new Level2()));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_when_sentinel_ef_property()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne
-                    .Where(l => EF.Property<int>(l.OneToOne_Optional_FK, "Id") == 0);
-
-                var result = query.ToList();
-
-                Assert.Equal(0, result.Count);
-            }
+            AssertQuery<Level1>(
+                l1s => l1s.Where(l => EF.Property<int>(l.OneToOne_Optional_FK, "Id") == 0),
+                l1s => l1s.Where(l => MaybeValue<int>(l.OneToOne_Optional_FK, () => l.OneToOne_Optional_FK.Id) == 0));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_required()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne
-                    .Where(l => EF.Property<int>(l.OneToOne_Required_FK, "Id") > 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(4, result.Count);
-            }
+            AssertQuery<Level1>(
+                l1s => l1s.Where(l => EF.Property<int>(l.OneToOne_Required_FK, "Id") > 7),
+                l1s => l1s.Where(l => MaybeValue<int>(l.OneToOne_Required_FK, () => l.OneToOne_Required_FK.Id) > 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_required2()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelTwo
-                    .Where(l => EF.Property<int>(l.OneToOne_Required_FK_Inverse, "Id") > 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(4, result.Count);
-            }
+            AssertQuery<Level2>(
+                l2s => l2s.Where(l => EF.Property<int>(l.OneToOne_Required_FK_Inverse, "Id") > 7),
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse.Id > 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_nested()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne
-                    .Where(l => EF.Property<int>(EF.Property<Level2>(l, "OneToOne_Required_FK"), "Id") == 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(1, result.Count);
-            }
+            AssertQuery<Level1>(
+                l1s => l1s.Where(l => EF.Property<int>(EF.Property<Level2>(l, "OneToOne_Required_FK"), "Id") == 7),
+                l1s => l1s.Where(l => MaybeValue<int>(l.OneToOne_Required_FK, () => l.OneToOne_Required_FK.Id) == 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_nested2()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelTwo
-                    .Where(l => EF.Property<int>(EF.Property<Level1>(l, "OneToOne_Required_FK_Inverse"), "Id") == 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(1, result.Count);
-            }
+            AssertQuery<Level2>(
+                l2s => l2s.Where(l => EF.Property<int>(EF.Property<Level1>(l, "OneToOne_Required_FK_Inverse"), "Id") == 7),
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse.Id == 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_and_member_expression1()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne
-                    .Where(l => EF.Property<Level2>(l, "OneToOne_Required_FK").Id == 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(1, result.Count);
-            }
+            AssertQuery<Level1>(
+                l1s => l1s.Where(l => EF.Property<Level2>(l, "OneToOne_Required_FK").Id == 7),
+                l1s => l1s.Where(l => MaybeValue<int>(l.OneToOne_Required_FK, () => l.OneToOne_Required_FK.Id) == 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_and_member_expression2()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne
-                    .Where(l => EF.Property<int>(l.OneToOne_Required_FK, "Id") == 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(1, result.Count);
-            }
+            AssertQuery<Level1>(
+                l1s => l1s.Where(l => EF.Property<int>(l.OneToOne_Required_FK, "Id") == 7),
+                l1s => l1s.Where(l => MaybeValue<int>(l.OneToOne_Required_FK, () => l.OneToOne_Required_FK.Id) == 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_using_property_method_and_member_expression3()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelTwo
-                    .Where(l => EF.Property<int>(l.OneToOne_Required_FK_Inverse, "Id") == 7);
-
-                var result = query.ToList();
-
-                Assert.Equal(1, result.Count);
-            }
+            AssertQuery<Level2>(
+                l2s => l2s.Where(l => EF.Property<int>(l.OneToOne_Required_FK_Inverse, "Id") == 7),
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse.Id == 7));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_navigation_converted_to_FK()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelTwo.Where(l => l.OneToOne_Required_FK_Inverse == new Level1 { Id = 1 });
-                var result = query.ToList();
-
-                Assert.Equal(1, result.Count);
-            }
+            AssertQuery<Level2>(
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse == new Level1 { Id = 1 }),
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse.Id == 1));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_two_conditions_on_same_navigation()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelOne.Where(l => l.OneToOne_Required_FK == new Level2 { Id = 1 }
-                                                        || l.OneToOne_Required_FK == new Level2 { Id = 2 });
-
-                var result = query.ToList();
-
-                Assert.Equal(2, result.Count);
-            }
+            AssertQuery<Level1>(
+                l1s => l1s.Where(l => l.OneToOne_Required_FK == new Level2 { Id = 1 }
+                    || l.OneToOne_Required_FK == new Level2 { Id = 2 }),
+                l1s => l1s.Where(l => MaybeValue<int>(l.OneToOne_Required_FK, () => l.OneToOne_Required_FK.Id) == 1
+                    || MaybeValue<int>(l.OneToOne_Required_FK, () => l.OneToOne_Required_FK.Id) == 2));
         }
 
         [ConditionalFact]
         public virtual void Key_equality_two_conditions_on_same_navigation2()
         {
-            using (var context = CreateContext())
-            {
-                var query = context.LevelTwo.Where(l => l.OneToOne_Required_FK_Inverse == new Level1 { Id = 1 }
-                                                        || l.OneToOne_Required_FK_Inverse == new Level1 { Id = 2 });
-
-                var result = query.ToList();
-
-                Assert.Equal(2, result.Count);
-            }
+            AssertQuery<Level2>(
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse == new Level1 { Id = 1 }
+                    || l.OneToOne_Required_FK_Inverse == new Level1 { Id = 2 }),
+                l2s => l2s.Where(l => l.OneToOne_Required_FK_Inverse.Id == 1
+                       || l.OneToOne_Required_FK_Inverse.Id == 2));
         }
 
         [ConditionalFact]
@@ -402,592 +337,283 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
         [ConditionalFact]
         public virtual void Join_navigation_key_access_optional()
         {
-            List<Level1> levelOnes;
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.ToList();
-                levelTwos = context.LevelTwo.Include(e => e.OneToOne_Optional_FK_Inverse).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            join e2 in context.LevelTwo on e1.Id equals e2.OneToOne_Optional_FK_Inverse.Id
-                            select new { Id1 = e1.Id, Id2 = e2.Id };
-
-                var result = query.ToList();
-
-                var expected = (from l1 in levelOnes
-                                join l2 in levelTwos on l1.Id equals l2.OneToOne_Optional_FK_Inverse?.Id
-                                select new { Id1 = l1.Id, Id2 = l2.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level2>(
+                (l1s, l2s) =>
+                    from e1 in l1s
+                    join e2 in l2s on e1.Id equals e2.OneToOne_Optional_FK_Inverse.Id
+                    select new { Id1 = e1.Id, Id2 = e2.Id },
+                (l1s, l2s) =>
+                    from e1 in l1s
+                    join e2 in l2s on e1.Id equals MaybeValue<int>(e2.OneToOne_Optional_FK_Inverse, () => e2.OneToOne_Optional_FK_Inverse.Id)
+                    select new { Id1 = e1.Id, Id2 = e2.Id },
+                elementSorter: e => e.Id1 + " " + e.Id2,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Join_navigation_key_access_required()
         {
-            List<Level1> levelOnes;
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.ToList();
-                levelTwos = context.LevelTwo.Include(e => e.OneToOne_Required_FK_Inverse).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            join e2 in context.LevelTwo on e1.Id equals e2.OneToOne_Required_FK_Inverse.Id
-                            select new { Id1 = e1.Id, Id2 = e2.Id };
-
-                var result = query.ToList();
-
-                var expected = (from l1 in levelOnes
-                                join l2 in levelTwos on l1.Id equals l2.OneToOne_Required_FK_Inverse?.Id
-                                select new { Id1 = l1.Id, Id2 = l2.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level2>(
+                (l1s, l2s) =>
+                    from e1 in l1s
+                    join e2 in l2s on e1.Id equals e2.OneToOne_Required_FK_Inverse.Id
+                    select new { Id1 = e1.Id, Id2 = e2.Id },
+                (l1s, l2s) =>
+                    from e1 in l1s
+                    join e2 in l2s on e1.Id equals e2.OneToOne_Required_FK_Inverse.Id
+                    select new { Id1 = e1.Id, Id2 = e2.Id },
+                elementSorter: e => e.Id1 + " " + e.Id2,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Navigation_key_access_optional_comparison()
         {
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelTwos = (from l2 in context.LevelTwo.Include(e => e.OneToOne_Optional_PK_Inverse)
-                             select l2).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e2 in context.LevelTwo
-                            where e2.OneToOne_Optional_PK_Inverse.Id > 5
-                            select e2.Id;
-
-                var result = query.ToList();
-
-                var expected = (from l2 in levelTwos
-                                where l2.OneToOne_Optional_PK_Inverse?.Id > 5
-                                select l2.Id).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQueryScalar<Level2, int>(
+                l2s =>
+                    from e2 in l2s
+                    where e2.OneToOne_Optional_PK_Inverse.Id > 5
+                    select e2.Id,
+                l2s =>
+                    from e2 in l2s
+                    where MaybeValue<int>(e2.OneToOne_Optional_PK_Inverse, () => e2.OneToOne_Optional_PK_Inverse.Id) > 5
+                    select e2.Id);
         }
 
         [ConditionalFact]
         public virtual void Navigation_key_access_required_comparison()
         {
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelTwos = (from l2 in context.LevelTwo.Include(e => e.OneToOne_Required_PK_Inverse)
-                             select l2).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e2 in context.LevelTwo
-                            where e2.OneToOne_Required_PK_Inverse.Id > 5
-                            select e2.Id;
-
-                var result = query.ToList();
-
-                var expected = (from l2 in levelTwos
-                                where l2.OneToOne_Required_PK_Inverse?.Id > 5
-                                select l2.Id).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQueryScalar<Level2, int>(
+                l2s =>
+                    from e2 in l2s
+                    where e2.OneToOne_Required_PK_Inverse.Id > 5
+                    select e2.Id);
         }
 
         [ConditionalFact]
         public virtual void Navigation_inside_method_call_translated_to_join()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Required_FK).ToList()
-                            where e1.OneToOne_Required_FK != null && e1.OneToOne_Required_FK.Name.StartsWith("L")
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Required_FK.Name.StartsWith("L")
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Required_FK.Name.StartsWith("L")
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<bool>(e1.OneToOne_Required_FK, () => e1.OneToOne_Required_FK.Name.StartsWith("L")) == true
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Navigation_inside_method_call_translated_to_join2()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e3 in context.LevelThree.Include(e => e.OneToOne_Required_FK_Inverse).ToList()
-                            where e3.OneToOne_Required_FK_Inverse != null && e3.OneToOne_Required_FK_Inverse.Name.StartsWith("L")
-                            select e3.Id).ToList();
-            }
-
-            ClearLog();
-            using (var context = CreateContext())
-            {
-                var query = from e3 in context.LevelThree
-                            where e3.OneToOne_Required_FK_Inverse.Name.StartsWith("L")
-                            select e3;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level3>(
+                l3s =>
+                    from e3 in l3s
+                    where e3.OneToOne_Required_FK_Inverse.Name.StartsWith("L")
+                    select e3);
         }
 
         [ConditionalFact]
         public virtual void Optional_navigation_inside_method_call_translated_to_join()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Name.StartsWith("L")
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Optional_FK.Name.StartsWith("L")
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Optional_FK.Name.StartsWith("L")
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<bool>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Name.StartsWith("L")) == true
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Optional_navigation_inside_property_method_translated_to_join()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Name.ToUpper() == "L2 01"
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where EF.Property<string>(EF.Property<Level2>(e1, "OneToOne_Optional_FK"), "Name") == "L2 01"
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where EF.Property<string>(EF.Property<Level2>(e1, "OneToOne_Optional_FK"), "Name") == "L2 01"
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where Maybe(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Name.ToUpper()) == "L2 01"
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Optional_navigation_inside_nested_method_call_translated_to_join()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Name.ToUpper().StartsWith("L")
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Optional_FK.Name.ToUpper().StartsWith("L")
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Optional_FK.Name.ToUpper().StartsWith("L")
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<bool>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Name.ToUpper().StartsWith("L")) == true
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Method_call_on_optional_navigation_translates_to_null_conditional_properly_for_arguments()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Name.StartsWith(e1.OneToOne_Optional_FK.Name)
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Optional_FK.Name.StartsWith(e1.OneToOne_Optional_FK.Name)
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Optional_FK.Name.StartsWith(e1.OneToOne_Optional_FK.Name)
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<bool>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Name.StartsWith(e1.OneToOne_Optional_FK.Name)) == true
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Optional_navigation_inside_method_call_translated_to_join_keeps_original_nullability()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Date.AddDays(10) > new DateTime(2000, 2, 1)
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Optional_FK.Date.AddDays(10) > new DateTime(2000, 2, 1)
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Optional_FK.Date.AddDays(10) > new DateTime(2000, 2, 1)
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<DateTime>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Date.AddDays(10)) > new DateTime(2000, 2, 1)
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Optional_navigation_inside_nested_method_call_translated_to_join_keeps_original_nullability()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Date.AddDays(10).AddDays(15).AddMonths(2) > new DateTime(2000, 2, 1)
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Optional_FK.Date.AddDays(10).AddDays(15).AddMonths(2) > new DateTime(2002, 2, 1)
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Optional_FK.Date.AddDays(10).AddDays(15).AddMonths(2) > new DateTime(2002, 2, 1)
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<DateTime>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Date.AddDays(10).AddDays(15).AddMonths(2)) > new DateTime(2000, 2, 1)
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Optional_navigation_inside_nested_method_call_translated_to_join_keeps_original_nullability_also_for_arguments()
         {
-            List<int> expected;
-            using (var context = CreateContext())
-            {
-                expected = (from e1 in context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList()
-                            where e1.OneToOne_Optional_FK != null && e1.OneToOne_Optional_FK.Date.AddDays(15).AddDays(e1.OneToOne_Optional_FK.Id) > new DateTime(2002, 2, 1)
-                            select e1.Id).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            where e1.OneToOne_Optional_FK.Date.AddDays(15).AddDays(e1.OneToOne_Optional_FK.Id) > new DateTime(2002, 2, 1)
-                            select e1;
-
-                var result = query.ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem.Id));
-                }
-            }
+            AssertQuery<Level1>(
+                l1s =>
+                    from e1 in l1s
+                    where e1.OneToOne_Optional_FK.Date.AddDays(15).AddDays(e1.OneToOne_Optional_FK.Id) > new DateTime(2002, 2, 1)
+                    select e1,
+                l1s =>
+                    from e1 in l1s
+                    where MaybeValue<DateTime>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Date.AddDays(15).AddDays(e1.OneToOne_Optional_FK.Id)) > new DateTime(2000, 2, 1)
+                    select e1);
         }
 
         [ConditionalFact]
         public virtual void Join_navigation_in_outer_selector_translated_to_extra_join()
         {
-            List<Level1> levelOnes;
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList();
-                levelTwos = context.LevelTwo.ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            join e2 in context.LevelTwo on e1.OneToOne_Optional_FK.Id equals e2.Id
-                            select new { Id1 = e1.Id, Id2 = e2.Id };
-
-                var result = query.ToList();
-
-                var expected = (from e1 in levelOnes
-                                join e2 in levelTwos on e1.OneToOne_Optional_FK?.Id equals e2.Id
-                                select new { Id1 = e1.Id, Id2 = e2.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level2>(
+                (l1s, l2s) =>
+                    from e1 in l1s
+                    join e2 in l2s on e1.OneToOne_Optional_FK.Id equals e2.Id
+                    select new { Id1 = e1.Id, Id2 = e2.Id },
+                (l1s, l2s) =>
+                    from e1 in l1s
+                    join e2 in l2s on MaybeValue<int>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Id) equals e2.Id
+                    select new { Id1 = e1.Id, Id2 = e2.Id },
+                elementSorter: e => e.Id1 + " " + e.Id2,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Join_navigation_in_outer_selector_translated_to_extra_join_nested()
         {
-            List<Level1> levelOnes;
-            List<Level3> levelThrees;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.Include(e => e.OneToOne_Required_FK.OneToOne_Optional_FK).ToList();
-                levelThrees = context.LevelThree.ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e1 in context.LevelOne
-                            join e3 in context.LevelThree on e1.OneToOne_Required_FK.OneToOne_Optional_FK.Id equals e3.Id
-                            select new { Id1 = e1.Id, Id3 = e3.Id };
-
-                var result = query.ToList();
-
-                var expected = (from e1 in levelOnes
-                                join e3 in levelThrees on e1.OneToOne_Required_FK?.OneToOne_Optional_FK?.Id equals e3.Id
-                                select new { Id1 = e1.Id, Id3 = e3.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level3>(
+                (l1s, l3s) =>
+                    from e1 in l1s
+                    join e3 in l3s on e1.OneToOne_Required_FK.OneToOne_Optional_FK.Id equals e3.Id
+                    select new { Id1 = e1.Id, Id3 = e3.Id },
+                (l1s, l3s) =>
+                    from e1 in l1s
+                    join e3 in l3s on MaybeValue(
+                        e1.OneToOne_Required_FK, 
+                        () => MaybeValue<int>(
+                            e1.OneToOne_Required_FK.OneToOne_Optional_FK, 
+                            () => e1.OneToOne_Required_FK.OneToOne_Optional_FK.Id)) equals e3.Id
+                    select new { Id1 = e1.Id, Id3 = e3.Id },
+                elementSorter: e => e.Id1 + " " + e.Id3,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Join_navigation_in_outer_selector_translated_to_extra_join_nested2()
         {
-            List<Level1> levelOnes;
-            List<Level3> levelThrees;
-            using (var context = CreateContext())
-            {
-                levelThrees = context.LevelThree.Include(e => e.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse).ToList();
-                levelOnes = context.LevelOne.ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e3 in context.LevelThree
-                            join e1 in context.LevelOne on e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse.Id equals e1.Id
-                            select new { Id3 = e3.Id, Id1 = e1.Id };
-
-                var result = query.ToList();
-
-                var expected = (from e3 in levelThrees
-                                join e1 in levelOnes on e3.OneToOne_Required_FK_Inverse?.OneToOne_Optional_FK_Inverse?.Id equals e1.Id
-                                select new { Id3 = e3.Id, Id1 = e1.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level3>(
+                (l1s, l3s) =>
+                    from e3 in l3s
+                    join e1 in l1s on e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse.Id equals e1.Id
+                    select new { Id3 = e3.Id, Id1 = e1.Id },
+                (l1s, l3s) =>
+                    from e3 in l3s
+                    join e1 in l1s on MaybeValue<int>(
+                        e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse, 
+                        () => e3.OneToOne_Required_FK_Inverse.OneToOne_Optional_FK_Inverse.Id) equals e1.Id
+                    select new { Id3 = e3.Id, Id1 = e1.Id },
+                elementSorter: e => e.Id1 + " " + e.Id3,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Join_navigation_in_inner_selector_translated_to_subquery()
         {
-            List<Level1> levelOnes;
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList();
-                levelTwos = context.LevelTwo.ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e2 in context.LevelTwo
-                            join e1 in context.LevelOne on e2.Id equals e1.OneToOne_Optional_FK.Id
-                            select new { Id2 = e2.Id, Id1 = e1.Id };
-
-                var result = query.ToList();
-
-                var expected = (from e2 in levelTwos
-                                join e1 in levelOnes on e2.Id equals e1.OneToOne_Optional_FK?.Id
-                                select new { Id2 = e2.Id, Id1 = e1.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level2>(
+                (l1s, l2s) =>
+                    from e2 in l2s
+                    join e1 in l1s on e2.Id equals e1.OneToOne_Optional_FK.Id
+                    select new { Id2 = e2.Id, Id1 = e1.Id },
+                (l1s, l2s) =>
+                    from e2 in l2s
+                    join e1 in l1s on e2.Id equals MaybeValue<int>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Id)
+                    select new { Id2 = e2.Id, Id1 = e1.Id },
+                elementSorter: e => e.Id1 + " " + e.Id3,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Join_navigations_in_inner_selector_translated_to_multiple_subquery_without_collision()
         {
-            List<Level1> levelOnes;
-            List<Level2> levelTwos;
-            List<Level3> levelThrees;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList();
-                levelTwos = context.LevelTwo.ToList();
-                levelThrees = context.LevelThree.Include(e => e.OneToOne_Optional_FK_Inverse).ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e2 in context.LevelTwo
-                            join e1 in context.LevelOne on e2.Id equals e1.OneToOne_Optional_FK.Id
-                            join e3 in context.LevelThree on e2.Id equals e3.OneToOne_Optional_FK_Inverse.Id
-                            select new { Id2 = e2.Id, Id1 = e1.Id, Id3 = e3.Id };
-
-                var result = query.ToList();
-
-                var expected = (from e2 in levelTwos
-                                join e1 in levelOnes on e2.Id equals e1.OneToOne_Optional_FK?.Id
-                                join e3 in levelThrees on e2.Id equals e3.OneToOne_Optional_FK_Inverse?.Id
-                                select new { Id2 = e2.Id, Id1 = e1.Id, Id3 = e3.Id }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level2, Level3>(
+                (l1s, l2s, l3s) =>
+                    from e2 in l2s
+                    join e1 in l1s on e2.Id equals e1.OneToOne_Optional_FK.Id
+                    join e3 in l3s on e2.Id equals e3.OneToOne_Optional_FK_Inverse.Id
+                    select new { Id2 = e2.Id, Id1 = e1.Id, Id3 = e3.Id },
+                (l1s, l2s, l3s) =>
+                    from e2 in l2s
+                    join e1 in l1s on e2.Id equals MaybeValue<int>(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Id)
+                    join e3 in l3s on e2.Id equals MaybeValue<int>(e3.OneToOne_Optional_FK_Inverse, () => e3.OneToOne_Optional_FK_Inverse.Id)
+                    select new { Id2 = e2.Id, Id1 = e1.Id, Id3 = e3.Id },
+                elementSorter: e => e.Id2 + " " + e.Id1 + " " + e.Id3,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
         public virtual void Join_navigation_translated_to_subquery_non_key_join()
         {
-            List<Level1> levelOnes;
-            List<Level2> levelTwos;
-            using (var context = CreateContext())
-            {
-                levelOnes = context.LevelOne.Include(e => e.OneToOne_Optional_FK).ToList();
-                levelTwos = context.LevelTwo.ToList();
-            }
-
-            ClearLog();
-
-            using (var context = CreateContext())
-            {
-                var query = from e2 in context.LevelTwo
-                            join e1 in context.LevelOne on e2.Name equals e1.OneToOne_Optional_FK.Name
-                            select new { Id2 = e2.Id, Name2 = e2.Name, Id1 = e1.Id, Name1 = e1.Name };
-
-                var result = query.ToList();
-
-                var expected = (from e2 in levelTwos
-                                join e1 in levelOnes on e2.Name equals e1.OneToOne_Optional_FK?.Name
-                                select new { Id2 = e2.Id, Name2 = e2.Name, Id1 = e1.Id, Name1 = e1.Name }).ToList();
-
-                Assert.Equal(expected.Count, result.Count);
-                foreach (var resultItem in result)
-                {
-                    Assert.True(expected.Contains(resultItem));
-                }
-            }
+            AssertQuery<Level1, Level2>(
+                (l1s, l2s) =>
+                    from e2 in l2s
+                    join e1 in l1s on e2.Name equals e1.OneToOne_Optional_FK.Name
+                    select new { Id2 = e2.Id, Name2 = e2.Name, Id1 = e1.Id, Name1 = e1.Name },
+                (l1s, l2s) =>
+                    from e2 in l2s
+                    join e1 in l1s on e2.Name equals Maybe(e1.OneToOne_Optional_FK, () => e1.OneToOne_Optional_FK.Name)
+                    select new { Id2 = e2.Id, Name2 = e2.Name, Id1 = e1.Id, Name1 = e1.Name },
+                elementSorter: e => e.Id2 + " " +  e.Name2 + " " +  e.Id1 + " " + e.Name,
+                elementAsserter: (e, a) => Assert.Equal(e, a));
         }
 
         [ConditionalFact]
@@ -4791,6 +4417,141 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
                 {
                     Assert.Equal(expected[i], result[i]);
                 }
+            }
+        }
+
+
+
+
+
+
+        private static TResult Maybe<TResult>(object caller, Func<TResult> expression) where TResult : class
+        {
+            if (caller == null)
+            {
+                return null;
+            }
+
+            return expression();
+        }
+
+        private static Nullable<TResult> MaybeValue<TResult>(object caller, Func<Nullable<TResult>> expression) where TResult : struct
+        {
+            if (caller == null)
+            {
+                return null;
+            }
+
+            return expression();
+        }
+
+
+
+        private void AssertQuery<TItem1>(
+            Func<IQueryable<TItem1>, IQueryable<object>> query,
+            Func<dynamic, object> elementSorter = null,
+            Action<dynamic, dynamic> elementAsserter = null)
+            where TItem1 : class
+        {
+            AssertQuery(query, query, elementSorter, elementAsserter);
+        }
+        
+        private void AssertQuery<TItem1>(
+            Func<IQueryable<TItem1>, IQueryable<object>> efQuery,
+            Func<IQueryable<TItem1>, IQueryable<object>> l2oQuery,
+            Func<dynamic, object> elementSorter = null,
+            Action<dynamic, dynamic> elementAsserter = null)
+            where TItem1 : class
+        {
+            using (var context = CreateContext())
+            {
+                TestHelpers.AssertResults(
+                    l2oQuery(ComplexNavigationsData.Set<TItem1>()).ToArray(),
+                    efQuery(context.Set<TItem1>()).ToArray(),
+                    elementSorter ?? (e => e.Id),
+                    elementAsserter ?? ((e, a) => Assert.Equal(e.Id, a.Id)));
+            }
+        }
+
+        private void AssertQuery<TItem1, TItem2>(
+            Func<IQueryable<TItem1>, IQueryable<TItem2>, IQueryable<object>> query,
+            Func<dynamic, object> elementSorter = null,
+            Action<dynamic, dynamic> elementAsserter = null)
+            where TItem1 : class
+            where TItem2 : class
+        {
+            AssertQuery<TItem1, TItem2>(query, query, elementSorter, elementAsserter);
+        }
+
+        private void AssertQuery<TItem1, TItem2>(
+            Func<IQueryable<TItem1>, IQueryable<TItem2>, IQueryable<object>> efQuery,
+            Func<IQueryable<TItem1>, IQueryable<TItem2>, IQueryable<object>> l2oQuery,
+            Func<dynamic, object> elementSorter = null,
+            Action<dynamic, dynamic> elementAsserter = null)
+            where TItem1 : class
+            where TItem2 : class
+        {
+            using (var context = CreateContext())
+            {
+                TestHelpers.AssertResults(
+                    l2oQuery(ComplexNavigationsData.Set<TItem1>(), ComplexNavigationsData.Set<TItem2>()).ToArray(),
+                    efQuery(context.Set<TItem1>(), context.Set<TItem2>()).ToArray(),
+                    elementSorter ?? (e => e.Id),
+                    elementAsserter ?? ((e, a) => Assert.Equal(e.Id, a.Id)));
+            }
+        }
+
+        private void AssertQuery<TItem1, TItem2, TItem3>(
+            Func<IQueryable<TItem1>, IQueryable<TItem2>, IQueryable<TItem3>, IQueryable<object>> query,
+            Func<dynamic, object> elementSorter = null,
+            Action<dynamic, dynamic> elementAsserter = null)
+            where TItem1 : class
+            where TItem2 : class
+            where TItem3 : class
+        {
+            AssertQuery<TItem1, TItem2, TItem3>(query, query, elementSorter, elementAsserter);
+        }
+
+        private void AssertQuery<TItem1, TItem2, TItem3>(
+            Func<IQueryable<TItem1>, IQueryable<TItem2>, IQueryable<TItem3>, IQueryable<object>> efQuery,
+            Func<IQueryable<TItem1>, IQueryable<TItem2>, IQueryable<TItem3>, IQueryable<object>> l2oQuery,
+            Func<dynamic, object> elementSorter = null,
+            Action<dynamic, dynamic> elementAsserter = null)
+            where TItem1 : class
+            where TItem2 : class
+            where TItem3 : class
+        {
+            using (var context = CreateContext())
+            {
+                TestHelpers.AssertResults(
+                    l2oQuery(ComplexNavigationsData.Set<TItem1>(), ComplexNavigationsData.Set<TItem2>(), ComplexNavigationsData.Set<TItem3>()).ToArray(),
+                    efQuery(context.Set<TItem1>(), context.Set<TItem2>(), context.Set<TItem3>()).ToArray(),
+                    elementSorter ?? (e => e.Id),
+                    elementAsserter ?? ((e, a) => Assert.Equal(e.Id, a.Id)));
+            }
+        }
+
+        private void AssertQueryScalar<TItem1, TResult>(
+            Func<IQueryable<TItem1>, IQueryable<TResult>> query)
+            where TItem1 : class
+            where TResult : struct
+        {
+            AssertQueryScalar(query, query);
+        }
+
+        private void AssertQueryScalar<TItem1, TResult>(
+            Func<IQueryable<TItem1>, IQueryable<TResult>> efQuery,
+            Func<IQueryable<TItem1>, IQueryable<TResult>> l2oQuery)
+            where TItem1 : class
+            where TResult : struct
+        {
+            using (var context = CreateContext())
+            {
+                TestHelpers.AssertResults(
+                    l2oQuery(ComplexNavigationsData.Set<TItem1>()).ToArray(),
+                    efQuery(context.Set<TItem1>()).ToArray(),
+                    e => e,
+                    (e, a) => Assert.Equal(e, a));
             }
         }
     }

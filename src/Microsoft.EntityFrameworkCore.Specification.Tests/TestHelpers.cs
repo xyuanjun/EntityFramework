@@ -183,5 +183,52 @@ namespace Microsoft.EntityFrameworkCore.Specification.Tests
             }
             return actual.Count;
         }
+
+        public static int AssertResults<T>(
+            IList<T> expected,
+            IList<T> actual,
+            Func<T, object> elementSorter = null,
+            Action<T, T> elementAsserter = null)
+        {
+            Assert.Equal(expected.Count, actual.Count);
+
+            elementAsserter = elementAsserter ?? ((e, a) => Assert.Equal(e, a));
+            if (elementSorter != null)
+            {
+                expected = expected.OrderBy(elementSorter).ToList();
+                actual = actual.OrderBy(elementSorter).ToList();
+            }
+
+            for (int i = 0; i < expected.Count; i++)
+            {
+                elementAsserter(expected[i], actual[i]);
+            }
+
+            return actual.Count;
+        }
+
+        public static int AssertResults<T>(
+            IList<T> expected,
+            IList<T> actual,
+            Func<T, T> elementSorter = null,
+            Action<T, T> elementAsserter = null)
+            where T: struct
+        {
+            Assert.Equal(expected.Count, actual.Count);
+
+            elementAsserter = elementAsserter ?? ((e, a) => Assert.Equal(e, a));
+            if (elementSorter != null)
+            {
+                expected = expected.OrderBy(elementSorter).ToList();
+                actual = actual.OrderBy(elementSorter).ToList();
+            }
+
+            for (int i = 0; i < expected.Count; i++)
+            {
+                elementAsserter(expected[i], actual[i]);
+            }
+
+            return actual.Count;
+        }
     }
 }
