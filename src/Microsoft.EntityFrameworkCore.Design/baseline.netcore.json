@@ -1,0 +1,1232 @@
+{
+  "AssemblyIdentity": "Microsoft.EntityFrameworkCore.Design, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60",
+  "Types": [
+    {
+      "Name": "Microsoft.Extensions.CommandLineUtils.CommandLineApplicationExtensions",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "Abstract": true,
+      "Static": true,
+      "Sealed": true,
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "OnExecute",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "invoke",
+              "Type": "System.Action"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Extension": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Option",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "template",
+              "Type": "System.String"
+            },
+            {
+              "Name": "description",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Static": true,
+          "Extension": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "HelpOption",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            }
+          ],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Static": true,
+          "Extension": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "VerboseOption",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            }
+          ],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Static": true,
+          "Extension": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "JsonOption",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            }
+          ],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Static": true,
+          "Extension": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "VersionOption",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "shortFormVersionGetter",
+              "Type": "System.Func<System.String>"
+            }
+          ],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Static": true,
+          "Extension": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.Internal.CommonOptions",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_Assembly",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_Assembly",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_StartupAssembly",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_StartupAssembly",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_DataDirectory",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_DataDirectory",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_RootNamespace",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_RootNamespace",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ProjectDirectory",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_ProjectDirectory",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ContentRootPath",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_ContentRootPath",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.Internal.OperationExecutor",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "DropDatabase",
+          "Parameters": [
+            {
+              "Name": "contextName",
+              "Type": "System.String"
+            },
+            {
+              "Name": "confirmCheck",
+              "Type": "System.Func<System.String, System.String, System.Boolean>"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "AddMigration",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Type": "System.String"
+            },
+            {
+              "Name": "outputDir",
+              "Type": "System.String"
+            },
+            {
+              "Name": "contextType",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "Microsoft.EntityFrameworkCore.Migrations.Design.MigrationFiles",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "UpdateDatabase",
+          "Parameters": [
+            {
+              "Name": "targetMigration",
+              "Type": "System.String"
+            },
+            {
+              "Name": "contextType",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "ScriptMigration",
+          "Parameters": [
+            {
+              "Name": "fromMigration",
+              "Type": "System.String"
+            },
+            {
+              "Name": "toMigration",
+              "Type": "System.String"
+            },
+            {
+              "Name": "idempotent",
+              "Type": "System.Boolean"
+            },
+            {
+              "Name": "contextType",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "RemoveMigration",
+          "Parameters": [
+            {
+              "Name": "contextType",
+              "Type": "System.String"
+            },
+            {
+              "Name": "force",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "Microsoft.EntityFrameworkCore.Migrations.Design.MigrationFiles",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "GetContextTypes",
+          "Parameters": [],
+          "ReturnType": "System.Collections.Generic.IEnumerable<System.Type>",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "GetMigrations",
+          "Parameters": [
+            {
+              "Name": "contextType",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Collections.Generic.IEnumerable<Microsoft.EntityFrameworkCore.Design.MigrationInfo>",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "ReverseEngineerAsync",
+          "Parameters": [
+            {
+              "Name": "provider",
+              "Type": "System.String"
+            },
+            {
+              "Name": "connectionString",
+              "Type": "System.String"
+            },
+            {
+              "Name": "outputDir",
+              "Type": "System.String"
+            },
+            {
+              "Name": "dbContextClassName",
+              "Type": "System.String"
+            },
+            {
+              "Name": "schemaFilters",
+              "Type": "System.Collections.Generic.IEnumerable<System.String>"
+            },
+            {
+              "Name": "tableFilters",
+              "Type": "System.Collections.Generic.IEnumerable<System.String>"
+            },
+            {
+              "Name": "useDataAnnotations",
+              "Type": "System.Boolean"
+            },
+            {
+              "Name": "overwriteFiles",
+              "Type": "System.Boolean"
+            },
+            {
+              "Name": "cancellationToken",
+              "Type": "System.Threading.CancellationToken",
+              "DefaultValue": "default(System.Threading.CancellationToken)"
+            }
+          ],
+          "ReturnType": "System.Threading.Tasks.Task<Microsoft.EntityFrameworkCore.Scaffolding.Internal.ReverseEngineerFiles>",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "options",
+              "Type": "Microsoft.EntityFrameworkCore.Design.Internal.CommonOptions"
+            },
+            {
+              "Name": "environment",
+              "Type": "System.String"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_Assembly",
+          "Parameters": [],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_Assembly",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandOption"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_StartupAssembly",
+          "Parameters": [],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_StartupAssembly",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandOption"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_DataDirectory",
+          "Parameters": [],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_DataDirectory",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandOption"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ProjectDirectory",
+          "Parameters": [],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_ProjectDirectory",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandOption"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ContentRootPath",
+          "Parameters": [],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_ContentRootPath",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandOption"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_RootNamespace",
+          "Parameters": [],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandOption",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_RootNamespace",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandOption"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Value",
+          "Parameters": [],
+          "ReturnType": "Microsoft.EntityFrameworkCore.Design.Internal.CommonOptions",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.ConsoleCommandLogger",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.Internal.CommandLogger",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_IsVerbose",
+          "Parameters": [],
+          "ReturnType": "System.Boolean",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "set_IsVerbose",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.Boolean"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Output",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Error",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Verbose",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Json",
+          "Parameters": [
+            {
+              "Name": "result",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteTrace",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteDebug",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteInformation",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteWarning",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteError",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Type": "System.String"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.DatabaseCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.DatabaseDropCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.DatabaseUpdateCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.DbContextCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.DbContextListCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.DbContextScaffoldCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.ExecuteCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Create",
+          "Parameters": [
+            {
+              "Name": "args",
+              "Type": "System.String[]",
+              "Direction": "Ref"
+            }
+          ],
+          "ReturnType": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "GetToolName",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.MigrationsAddCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.MigrationsCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.MigrationsListCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.MigrationsRemoveCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.MigrationsScriptCommand",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Configure",
+          "Parameters": [
+            {
+              "Name": "command",
+              "Type": "Microsoft.Extensions.CommandLineUtils.CommandLineApplication"
+            },
+            {
+              "Name": "commonOptions",
+              "Type": "Microsoft.EntityFrameworkCore.Tools.Cli.CommonCommandOptions"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Tools.Cli.Program",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Main",
+          "Parameters": [
+            {
+              "Name": "args",
+              "Type": "System.String[]"
+            }
+          ],
+          "ReturnType": "System.Int32",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    }
+  ]
+}

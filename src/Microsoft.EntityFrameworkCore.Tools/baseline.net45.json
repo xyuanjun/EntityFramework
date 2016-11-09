@@ -1,0 +1,1124 @@
+{
+  "AssemblyIdentity": "Microsoft.EntityFrameworkCore.Tools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60",
+  "Types": [
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Internal.ToolsStrings",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "Abstract": true,
+      "Static": true,
+      "Sealed": true,
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "BuildFailed",
+          "Parameters": [
+            {
+              "Name": "projectName",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "ClassLibrariesNotSupportedInCli",
+          "Parameters": [
+            {
+              "Name": "projectName",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "fwlink",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "DesktopCommandsRequiresWindows",
+          "Parameters": [
+            {
+              "Name": "framework",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "LogBeginDispatch",
+          "Parameters": [
+            {
+              "Name": "projectCommand",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "projectName",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "LogUsingConfiguration",
+          "Parameters": [
+            {
+              "Name": "configName",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "LogUsingFramework",
+          "Parameters": [
+            {
+              "Name": "frameworkName",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "LogUsingTargetProject",
+          "Parameters": [
+            {
+              "Name": "project",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "ProjectDependencyCommandNotFound",
+          "Parameters": [
+            {
+              "Name": "projectName",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "dependencyCommand",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "toolCommand",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "fwlink",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "LogDataDirectory",
+          "Parameters": [
+            {
+              "Name": "path",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "LogUsingStartupProject",
+          "Parameters": [
+            {
+              "Name": "project",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.String",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "System.MarshalByRefObject",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "logHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "logHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            },
+            {
+              "Name": "assemblyLoader",
+              "Type": "Microsoft.EntityFrameworkCore.Design.AssemblyLoader"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.IOperationResultHandler",
+      "Visibility": "Public",
+      "Kind": "Interface",
+      "Abstract": true,
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_Version",
+          "Parameters": [],
+          "ReturnType": "System.Int32",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "OnResult",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "OnError",
+          "Parameters": [
+            {
+              "Name": "type",
+              "Type": "System.String"
+            },
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "stackTrace",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+      "Visibility": "Public",
+      "Kind": "Interface",
+      "Abstract": true,
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_Version",
+          "Parameters": [],
+          "ReturnType": "System.Int32",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteError",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteWarning",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteInformation",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteDebug",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteTrace",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationResultHandler",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "System.MarshalByRefObject",
+      "ImplementedInterfaces": [
+        "Microsoft.EntityFrameworkCore.Design.IOperationResultHandler"
+      ],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_Version",
+          "Parameters": [],
+          "ReturnType": "System.Int32",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationResultHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_HasResult",
+          "Parameters": [],
+          "ReturnType": "System.Boolean",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_Result",
+          "Parameters": [],
+          "ReturnType": "System.Object",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ErrorType",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ErrorMessage",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "get_ErrorStackTrace",
+          "Parameters": [],
+          "ReturnType": "System.String",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "OnResult",
+          "Parameters": [
+            {
+              "Name": "value",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationResultHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "OnError",
+          "Parameters": [
+            {
+              "Name": "type",
+              "Type": "System.String"
+            },
+            {
+              "Name": "message",
+              "Type": "System.String"
+            },
+            {
+              "Name": "stackTrace",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationResultHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationLogHandler",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "System.MarshalByRefObject",
+      "ImplementedInterfaces": [
+        "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler"
+      ],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "get_Version",
+          "Parameters": [],
+          "ReturnType": "System.Int32",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteError",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteWarning",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteInformation",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteDebug",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteTrace",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "ImplementedInterface": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler",
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "writeError",
+              "Type": "System.Action<System.String>",
+              "DefaultValue": "null"
+            },
+            {
+              "Name": "writeWarning",
+              "Type": "System.Action<System.String>",
+              "DefaultValue": "null"
+            },
+            {
+              "Name": "writeInformation",
+              "Type": "System.Action<System.String>",
+              "DefaultValue": "null"
+            },
+            {
+              "Name": "writeDebug",
+              "Type": "System.Action<System.String>",
+              "DefaultValue": "null"
+            },
+            {
+              "Name": "writeTrace",
+              "Type": "System.Action<System.String>",
+              "DefaultValue": "null"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.Internal.CommandLoggerAdapter",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.Internal.CommandLogger",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "WriteError",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteInformation",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteWarning",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteDebug",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "WriteTrace",
+          "Parameters": [
+            {
+              "Name": "message",
+              "Type": "System.String"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Protected",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "name",
+              "Type": "System.String"
+            },
+            {
+              "Name": "logHandler",
+              "Type": "Microsoft.EntityFrameworkCore.Design.IOperationLogHandler"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.Internal.ForwardingProxy",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "Abstract": true,
+      "Static": true,
+      "Sealed": true,
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Unwrap<T0>",
+          "Parameters": [
+            {
+              "Name": "target",
+              "Type": "System.Object"
+            }
+          ],
+          "ReturnType": "T0",
+          "Static": true,
+          "Visibility": "Public",
+          "GenericParameter": [
+            {
+              "ParameterName": "T",
+              "ParameterPosition": 0,
+              "Class": true,
+              "BaseTypeOrInterfaces": []
+            }
+          ]
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.Internal.ForwardingProxy<T0>",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "System.Runtime.Remoting.Proxies.RealProxy",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Invoke",
+          "Parameters": [
+            {
+              "Name": "msg",
+              "Type": "System.Runtime.Remoting.Messaging.IMessage"
+            }
+          ],
+          "ReturnType": "System.Runtime.Remoting.Messaging.IMessage",
+          "Virtual": true,
+          "Override": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "GetTransparentProxy",
+          "Parameters": [],
+          "ReturnType": "T0",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "target",
+              "Type": "System.Object"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": [
+        {
+          "ParameterName": "T",
+          "ParameterPosition": 0,
+          "BaseTypeOrInterfaces": []
+        }
+      ]
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+GetContextType",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+AddMigration",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+UpdateDatabase",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+ScriptMigration",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+RemoveMigration",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+GetContextTypes",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+GetMigrations",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+ReverseEngineer",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+DropDatabase",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "BaseType": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "executor",
+              "Type": "Microsoft.EntityFrameworkCore.Design.OperationExecutor"
+            },
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            },
+            {
+              "Name": "args",
+              "Type": "System.Collections.IDictionary"
+            }
+          ],
+          "Visibility": "Public",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    },
+    {
+      "Name": "Microsoft.EntityFrameworkCore.Design.OperationExecutor+OperationBase",
+      "Visibility": "Public",
+      "Kind": "Class",
+      "Abstract": true,
+      "BaseType": "System.MarshalByRefObject",
+      "ImplementedInterfaces": [],
+      "Members": [
+        {
+          "Kind": "Method",
+          "Name": "Execute",
+          "Parameters": [
+            {
+              "Name": "action",
+              "Type": "System.Action"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": []
+        },
+        {
+          "Kind": "Method",
+          "Name": "Execute<T0>",
+          "Parameters": [
+            {
+              "Name": "action",
+              "Type": "System.Func<T0>"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": [
+            {
+              "ParameterName": "T",
+              "ParameterPosition": 0,
+              "BaseTypeOrInterfaces": []
+            }
+          ]
+        },
+        {
+          "Kind": "Method",
+          "Name": "Execute<T0>",
+          "Parameters": [
+            {
+              "Name": "action",
+              "Type": "System.Func<System.Collections.Generic.IEnumerable<T0>>"
+            }
+          ],
+          "ReturnType": "System.Void",
+          "Virtual": true,
+          "Visibility": "Public",
+          "GenericParameter": [
+            {
+              "ParameterName": "T",
+              "ParameterPosition": 0,
+              "BaseTypeOrInterfaces": []
+            }
+          ]
+        },
+        {
+          "Kind": "Constructor",
+          "Name": ".ctor",
+          "Parameters": [
+            {
+              "Name": "resultHandler",
+              "Type": "System.Object"
+            }
+          ],
+          "Visibility": "Protected",
+          "GenericParameter": []
+        }
+      ],
+      "GenericParameters": []
+    }
+  ]
+}
