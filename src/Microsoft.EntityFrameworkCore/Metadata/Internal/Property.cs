@@ -311,10 +311,18 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Internal
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public virtual void SetRequiresValueGenerator(bool requiresValueGenerator, ConfigurationSource configurationSource)
+        public virtual void SetRequiresValueGenerator(bool? requiresValueGenerator, ConfigurationSource configurationSource)
         {
-            SetFlag(requiresValueGenerator, PropertyFlags.RequiresValueGenerator);
-            UpdateRequiresValueGeneratorConfigurationSource(configurationSource);
+            if (requiresValueGenerator != null)
+            {
+                SetFlag(requiresValueGenerator.Value, PropertyFlags.RequiresValueGenerator);
+                UpdateRequiresValueGeneratorConfigurationSource(configurationSource);
+            }
+            else
+            {
+                ResetFlag(PropertyFlags.RequiresValueGenerator);
+                SetRequiresValueGeneratorConfigurationSource(null);
+            }
         }
 
         private bool DefaultRequiresValueGenerator
@@ -327,6 +335,9 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Internal
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public virtual ConfigurationSource? GetRequiresValueGeneratorConfigurationSource() => _requiresValueGeneratorConfigurationSource;
+
+        private void SetRequiresValueGeneratorConfigurationSource(ConfigurationSource? configurationSource)
+            => _requiresValueGeneratorConfigurationSource = configurationSource;
 
         private void UpdateRequiresValueGeneratorConfigurationSource(ConfigurationSource configurationSource)
             => _requiresValueGeneratorConfigurationSource = configurationSource.Max(_requiresValueGeneratorConfigurationSource);
@@ -461,6 +472,9 @@ namespace Microsoft.EntityFrameworkCore.Metadata.Internal
                 _flags = (_flags & ~(int)flag) | falseValue;
             }
         }
+
+        private void ResetFlag(PropertyFlags flag)
+            => _flags = _flags & ~(int)flag;
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
