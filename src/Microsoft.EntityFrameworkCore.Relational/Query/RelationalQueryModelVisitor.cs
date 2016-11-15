@@ -710,14 +710,17 @@ namespace Microsoft.EntityFrameworkCore.Query
 
                         if (groupJoin)
                         {
-                            var outerJoinOrderingExtractor = new OuterJoinOrderingExtractor();
-
-                            outerJoinOrderingExtractor.Visit(predicate);
-
-                            foreach (var expression in outerJoinOrderingExtractor.Expressions)
+                            var previousOrderings = previousSelectExpression.OrderBy.ToList();
+                            if (NeedOrderByForGroupJoin(predicate))
                             {
-                                previousSelectExpression
-                                    .AddToOrderBy(new Ordering(expression, OrderingDirection.Asc));
+                                var outerJoinOrderingExtractor = new OuterJoinOrderingExtractor();
+                                outerJoinOrderingExtractor.Visit(predicate);
+
+                                foreach (var expression in outerJoinOrderingExtractor.Expressions)
+                                {
+                                    previousSelectExpression.AddToOrderBy(
+                                        new Ordering(expression, OrderingDirection.Asc));
+                                }
                             }
 
                             var additionalFromClause
@@ -784,6 +787,15 @@ namespace Microsoft.EntityFrameworkCore.Query
                                     QueriesBySource.Remove(joinClause);
 
                                     operatorToFlatten = LinqOperatorProvider.Join;
+
+                                    if (previousOrderings.Count != previousSelectExpression.OrderBy.Count)
+                                    {
+                                        previousSelectExpression.ClearOrderBy();
+                                        foreach (var ordering in previousOrderings)
+                                        {
+                                            previousSelectExpression.AddToOrderBy(ordering);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -806,6 +818,51 @@ namespace Microsoft.EntityFrameworkCore.Query
             {
                 WarnClientEval(joinClause);
             }
+        }
+
+        private bool NeedOrderByForGroupJoin(Expression predicate)
+        {
+            var joinPredicateComparisons = ExtractJoinPredicateComparisonExpressions(predicate);
+            foreach (var joinPredicateComparison in joinPredicateComparisons)
+            {
+                var leftColumn = joinPredicateComparison.Left.RemoveConvert().TryGetColumnExpression();
+                var rightColumn = joinPredicateComparison.Right.RemoveConvert().TryGetColumnExpression();
+                if (leftColumn != null && rightColumn != null && leftColumn.Property.IsForeignKey() && rightColumn.Property.IsPrimaryKey())
+                {
+                    var foreignKeyPrincipalTypes = leftColumn.Property.GetContainingForeignKeys().Select(k => k.PrincipalEntityType.RootType());
+                    var primaryKeyDeclaringType = rightColumn.Property.DeclaringEntityType;
+                    if (!foreignKeyPrincipalTypes.Contains(primaryKeyDeclaringType))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private IEnumerable<BinaryExpression> ExtractJoinPredicateComparisonExpressions(Expression predicate)
+        {
+            var binaryPredicate = predicate as BinaryExpression;
+            if (binaryPredicate != null)
+            {
+                if (predicate.NodeType == ExpressionType.Equal)
+                {
+                    return new[] { binaryPredicate };
+                }
+
+                if (predicate.NodeType == ExpressionType.AndAlso)
+                {
+                    return ExtractJoinPredicateComparisonExpressions(binaryPredicate.Left)
+                        .Concat(ExtractJoinPredicateComparisonExpressions(binaryPredicate.Right));
+                }
+            }
+
+            return Enumerable.Empty<BinaryExpression>();
         }
 
         private Dictionary<IQuerySource, Expression> SnapshotQuerySourceMapping(QueryModel queryModel)
