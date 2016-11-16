@@ -21,20 +21,20 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
     {
         private static IServiceProvider BuildServiceProvider<TContext>(int poolSize = 32)
             where TContext : DbContext
-            => new ServiceCollection()
-                .AddEntityFrameworkSqlServer()
-                .AddDbContext<TContext>(
-                    ob => ob.UseSqlServer(SqlServerNorthwindContext.GetSharedStore().ConnectionString),
-                    poolSize)
-                .BuildServiceProvider();
+        => new ServiceCollection()
+            .AddEntityFrameworkSqlServer()
+            .AddDbContextPool<TContext>(
+                ob => ob.UseSqlServer(SqlServerNorthwindContext.GetSharedStore().ConnectionString),
+                poolSize)
+            .BuildServiceProvider();
 
         private class PooledContext : DbContext
         {
             public static int InstanceCount;
 
-            public bool OnConfiguringWasRun;
+            public static bool ModifyOptions;
 
-            public PooledContext(DbContextOptions options)
+            private PooledContext(DbContextOptions options)
                 : base(options)
             {
                 Interlocked.Increment(ref InstanceCount);
@@ -44,7 +44,12 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
             }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-                => OnConfiguringWasRun = true;
+            {
+                if (ModifyOptions)
+                {
+                    optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+                }
+            }
 
             public DbSet<Customer> Customers { get; set; }
 
@@ -66,6 +71,41 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
 
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => BuildServiceProvider<PooledContext>(-1));
+        }
+
+        [Fact]
+        public void Options_modified_in_on_configuring()
+        {
+            var serviceProvider = BuildServiceProvider<PooledContext>();
+
+            var serviceScope1 = serviceProvider.CreateScope();
+
+            PooledContext.ModifyOptions = true;
+
+            try
+            {
+                Assert.Throws<InvalidOperationException>(
+                    () => serviceScope1.ServiceProvider.GetService<PooledContext>());
+            }
+            finally
+            {
+                PooledContext.ModifyOptions = false;
+            }
+        }
+
+        private class BadCtorContext : DbContext
+        {
+        }
+
+        [Fact]
+        public void Constructor_validation()
+        {
+            var serviceProvider = BuildServiceProvider<BadCtorContext>();
+
+            var serviceScope1 = serviceProvider.CreateScope();
+
+            Assert.Throws<InvalidOperationException>(
+                () => serviceScope1.ServiceProvider.GetService<BadCtorContext>());
         }
 
         [Fact]
@@ -107,8 +147,6 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.FunctionalTests
             var serviceScope = serviceProvider.CreateScope();
 
             var context1 = serviceScope.ServiceProvider.GetService<PooledContext>();
-
-            Assert.False(context1.OnConfiguringWasRun);
 
             context1.ChangeTracker.AutoDetectChangesEnabled = true;
             context1.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;

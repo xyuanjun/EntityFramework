@@ -4,9 +4,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using JetBrains.Annotations;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.EntityFrameworkCore.Internal
 {
@@ -21,6 +22,8 @@ namespace Microsoft.EntityFrameworkCore.Internal
 
         private readonly ConcurrentQueue<TContext> _pool = new ConcurrentQueue<TContext>();
 
+        private readonly Func<TContext> _activator;
+
         private int _maxSize;
         private int _count;
 
@@ -31,18 +34,53 @@ namespace Microsoft.EntityFrameworkCore.Internal
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         // ReSharper disable once SuggestBaseTypeForParameter
-        public DbContextPool([NotNull] DbContextOptions<TContext> options)
+        public DbContextPool([NotNull] DbContextOptions options)
         {
             _maxSize = options.FindExtension<CoreOptionsExtension>()?.MaxPoolSize ?? DefaultPoolSize;
 
             options.Freeze();
+
+            _activator = CreateActivator(options);
+
+            if (_activator == null)
+            {
+                throw new InvalidOperationException(
+                    CoreStrings.PoolingContextCtorError(typeof(TContext).ShortDisplayName()));
+            }
+        }
+
+        private static Func<TContext> CreateActivator(DbContextOptions options)
+        {
+            var ctors
+                = typeof(TContext).GetTypeInfo()
+                    .GetConstructors(
+                        BindingFlags.Instance
+                        | BindingFlags.Public
+                        | BindingFlags.NonPublic);
+
+            if (ctors.Length == 1)
+            {
+                var parameters = ctors[0].GetParameters();
+
+                if (parameters.Length == 1
+                    && (parameters[0].ParameterType == typeof(DbContextOptions) 
+                        || parameters[0].ParameterType == typeof(DbContextOptions<TContext>)))
+                {
+                    return
+                        Expression.Lambda<Func<TContext>>(
+                                Expression.New(ctors[0], Expression.Constant(options)))
+                            .Compile();
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public virtual TContext Rent([NotNull] IServiceProvider serviceProvider)
+        public virtual TContext Rent()
         {
             TContext context;
 
@@ -57,7 +95,7 @@ namespace Microsoft.EntityFrameworkCore.Internal
                 return context;
             }
 
-            context = ActivatorUtilities.CreateInstance<TContext>(serviceProvider);
+            context = _activator();
 
             NonCapturingLazyInitializer
                 .EnsureInitialized(
@@ -85,12 +123,12 @@ namespace Microsoft.EntityFrameworkCore.Internal
 
             Interlocked.Decrement(ref _count);
 
-            Debug.Assert(_maxSize > 0 && _pool.Count <= _maxSize);
+            Debug.Assert(_maxSize == 0 || _pool.Count <= _maxSize);
 
             return false;
         }
 
-        DbContext IDbContextPool.Rent(IServiceProvider serviceProvider) => Rent(serviceProvider);
+        DbContext IDbContextPool.Rent() => Rent();
 
         bool IDbContextPool.Return(DbContext context) => Return((TContext)context);
 
